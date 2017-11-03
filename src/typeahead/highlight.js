@@ -114,7 +114,7 @@ var highlight = (function(doc) {
           }
           escapedPatterns.push(escapedWord);
       }
-      regexStr = wordsOnly ? "\\b(" + escapedPatterns.join("|") + ")\\b" : "(" + escapedPatterns.join("|") + ")";
-      return caseSensitive ? new RegExp(regexStr) : new RegExp(regexStr, "i");
+      regexStr = wordsOnly ? '\\b(' + escapedPatterns.join('|') + ')\\b' : '(' + escapedPatterns.join('|') + ')';
+      return caseSensitive ? new RegExp(regexStr) : new RegExp(regexStr, 'i');
   }
 })(window.document);
