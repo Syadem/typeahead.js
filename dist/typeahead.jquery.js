@@ -499,6 +499,7 @@
             });
             $(www.menu).attr("id", this.$input.attr("id") + "_listbox");
             this.query = this.$input.val();
+            this.setInputValueFn = _.isFunction(o.setInputValue) ? o.setInputValue : null;
             this.queryWhenFocused = this.hasFocus() ? this.query : null;
             this.$overflowHelper = buildOverflowHelper(this.$input);
             this._checkLanguageDirection();
@@ -620,7 +621,11 @@
                 return this.$input.val();
             },
             setInputValue: function setInputValue(value) {
-                this.$input.val(value);
+                if (this.setInputValueFn) {
+                    this.setInputValueFn(this.$input, value);
+                } else {
+                    this.$input.val(value);
+                }
                 this.clearHintIfInvalid();
                 this._checkLanguageDirection();
             },
@@ -1478,7 +1483,8 @@
                     });
                     input = new Input({
                         hint: $hint,
-                        input: $input
+                        input: $input,
+                        setInputValue: o.setInputValue
                     }, www);
                     menu = new MenuConstructor({
                         node: $menu,

@@ -48,6 +48,8 @@ var Input = (function() {
     // on initialization, it'll most likely be an empty string
     this.query = this.$input.val();
 
+    this.setInputValueFn = _.isFunction(o.setInputValue) ? o.setInputValue : null;
+
     // for tracking when a change event should be triggered
     this.queryWhenFocused = this.hasFocus() ? this.query : null;
 
@@ -241,7 +243,11 @@ var Input = (function() {
     },
 
     setInputValue: function setInputValue(value) {
-      this.$input.val(value);
+      if (this.setInputValueFn) {
+        this.setInputValueFn(this.$input, value);
+      } else {
+        this.$input.val(value);
+      }
       this.clearHintIfInvalid();
       this._checkLanguageDirection();
     },
